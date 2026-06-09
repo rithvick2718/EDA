@@ -1,58 +1,42 @@
 import pandas as pd
-from pathlib import Path
-import tkinter as tk
-from tkinter import filedialog
+import os
 
+def load_csv_data(file_path):
+    """
+    Attempts to read a CSV file into a pandas DataFrame.
+    
+    Returns:
+        tuple: (DataFrame, error_message)
+        If successful, returns (df, None).
+        If failed, returns (None, "Error description").
+    """
+    # 1. Validate the file path
+    if not file_path:
+        return None, "No file path was provided."
 
-def load_csv():
-    while True:
-        root = tk.Tk()
-        root.withdraw()  # Hide the main Tk window
+    if not os.path.exists(file_path):
+        return None, "The selected file does not exist or was moved."
 
-        path = filedialog.askopenfilename(
-            title="Select CSV File",
-            filetypes=[("CSV files", "*.csv"), ("All files", "*.*")]
-        )
+    if not file_path.lower().endswith('.csv'):
+        return None, "Invalid file type. Please ensure you select a .csv file."
 
-        root.destroy()
+    # 2. Attempt to parse the data
+    try:
+        # Read the CSV into a pandas DataFrame
+        df = pd.read_csv(file_path)
+        
+        # Check if the file has a header but no actual rows of data
+        if df.empty:
+            return None, "The CSV file was loaded, but it contains no data rows."
+            
+        return df, None
 
-        if not path:
-            print("\n❌ No file selected.\n")
-            continue
-
-        try:
-            df = pd.read_csv(path)
-
-            print(f"\n✓ CSV Loaded Successfully")
-            print(f"File: {Path(path).name}\n")
-
-            return df
-
-        except Exception as e:
-            print(f"\n❌ Error loading CSV: {e}\n")
-def dataset_summary(df):
-    rows, cols = df.shape
-    summary = {
-        "rows": rows,
-        "columns": cols,
-        "missing_values": int(df.isna().sum().sum()),
-        "duplicate_rows": int(df.duplicated().sum()),
-        "memory_mb": round(
-            df.memory_usage(deep=True).sum() / (1024 ** 2),
-            2
-        )
-    }
-    return summary
-def display_dataset_summary(summary):
-
-    print("=" * 50)
-    print("DATASET SUMMARY")
-    print("=" * 50)
-
-    print(f"Rows            : {summary['rows']:,}")
-    print(f"Columns         : {summary['columns']:,}")
-    print(f"Missing Values  : {summary['missing_values']:,}")
-    print(f"Duplicate Rows  : {summary['duplicate_rows']:,}")
-    print(f"Memory Usage    : {summary['memory_mb']} MB")
-
-    print()
+    # 3. Catch specific pandas and system errors
+    except pd.errors.EmptyDataError:
+        return None, "The CSV file is completely empty."
+    except pd.errors.ParserError:
+        return None, "Formatting issue detected. The CSV has irregular columns or malformed rows."
+    except UnicodeDecodeError:
+        return None, "Encoding error. Please ensure the CSV is saved using UTF-8 encoding."
+    except Exception as e:
+        return None, f"An unexpected error occurred while loading the file:\n{str(e)}"

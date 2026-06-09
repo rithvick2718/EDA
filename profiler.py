@@ -26,13 +26,3 @@ def profile_dataset(df):
         }
 
     return profile
-
-def display_profile(profile):
-
-    print("\nDataset Columns")
-    print("-" * 30)
-
-    for idx, (col, info) in enumerate(profile.items(), start=1):
-        print(f"{idx}. {col} ({info['type']})")
-
-    print()
