@@ -12,7 +12,7 @@ def create_histogram(df: pd.DataFrame, column: str, is_dark_mode: bool = False, 
     grid_color = "#444444" if is_dark_mode else "#DDDDDD"
 
     # Setup figure and axes
-    fig = Figure(figsize=(8, 5), dpi=1500)
+    fig = Figure(figsize=(8, 5), dpi=100)
     fig.patch.set_facecolor(bg_color)
     
     ax = fig.add_subplot(111)

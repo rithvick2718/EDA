@@ -18,7 +18,7 @@ def create_correlation_heatmap(
     grid_color = "#444444" if is_dark_mode else "#DDDDDD"
 
     # Setup figure and axes (slightly taller to accommodate rotated labels)
-    fig = Figure(figsize=(9, 6), dpi=1500)
+    fig = Figure(figsize=(9, 6), dpi=100)
     fig.patch.set_facecolor(bg_color)
     
     ax = fig.add_subplot(111)

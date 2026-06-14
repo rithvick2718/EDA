@@ -23,7 +23,7 @@ def create_scatter_plot(
     grid_color = "#444444" if is_dark_mode else "#DDDDDD"
 
     # FIX 1: Lower DPI to a reasonable screen resolution to prevent memory/lag issues
-    fig = Figure(figsize=(8, 5), dpi=120)
+    fig = Figure(figsize=(8, 5), dpi=100)
     fig.patch.set_facecolor(bg_color)
     
     ax = fig.add_subplot(111)

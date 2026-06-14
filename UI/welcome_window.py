@@ -3,7 +3,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QIcon
 from loader import load_csv_data
 from resource_path import resource_path
-from main_window import MainWindow
+from UI.main_window import MainWindow
 
 class WelcomeWindow(QMainWindow):
     def __init__(self):

@@ -20,7 +20,7 @@ def create_pie_chart(
 
     # Setup figure and axes
     # Note: dpi=150 is usually sufficient. 1500 can cause severe memory issues in GUIs.
-    fig = Figure(figsize=(8, 5), dpi=1500)
+    fig = Figure(figsize=(8, 5), dpi=100)
     fig.patch.set_facecolor(bg_color)
 
     ax = fig.add_subplot(111)
